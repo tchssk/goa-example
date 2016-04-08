@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/goadesign/goa"
 	"github.com/tchssk/goa-example/app"
 )
@@ -17,6 +19,6 @@ func NewOperandsController(service *goa.Service) *OperandsController {
 
 // Add runs the add action.
 func (c *OperandsController) Add(ctx *app.AddOperandsContext) error {
-	// TBD: implement
-	return nil
+	sum := ctx.Left + ctx.Right
+	return ctx.OK([]byte(strconv.Itoa(sum)))
 }
