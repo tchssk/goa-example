@@ -30,6 +30,27 @@ paths:
           description: OK
       schemes:
       - http
+  /sub/{left}/{right}:
+    get:
+      description: sub returns the difference between left and right parameters in
+        the response body
+      operationId: operands#sub
+      parameters:
+      - description: Left operand
+        in: path
+        name: left
+        required: true
+        type: integer
+      - description: Right operand
+        in: path
+        name: right
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+      schemes:
+      - http
 produces:
 - application/json
 - application/xml

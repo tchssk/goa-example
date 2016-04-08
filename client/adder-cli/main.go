@@ -47,5 +47,18 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	tmp1.RegisterFlags(sub)
 	command.AddCommand(sub)
 	app.AddCommand(command)
+	command = &cobra.Command{
+		Use:   "sub",
+		Short: `sub returns the difference between left and right parameters in the response body`,
+	}
+	tmp2 := new(SubOperandsCommand)
+	sub = &cobra.Command{
+		Use:   "operands",
+		Short: ``,
+		RunE:  func(cmd *cobra.Command, args []string) error { return tmp2.Run(c, args) },
+	}
+	tmp2.RegisterFlags(sub)
+	command.AddCommand(sub)
+	app.AddCommand(command)
 
 }

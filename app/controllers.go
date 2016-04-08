@@ -45,6 +45,7 @@ func initService(service *goa.Service) {
 type OperandsController interface {
 	goa.Muxer
 	Add(*AddOperandsContext) error
+	Sub(*SubOperandsContext) error
 }
 
 // MountOperandsController "mounts" a Operands resource controller on the given service.
@@ -61,4 +62,14 @@ func MountOperandsController(service *goa.Service, ctrl OperandsController) {
 	}
 	service.Mux.Handle("GET", "/add/:left/:right", ctrl.MuxHandler("Add", h, nil))
 	service.LogInfo("mount", "ctrl", "Operands", "action", "Add", "route", "GET /add/:left/:right")
+
+	h = func(ctx context.Context, rw http.ResponseWriter, req *http.Request) error {
+		rctx, err := NewSubOperandsContext(ctx, service)
+		if err != nil {
+			return err
+		}
+		return ctrl.Sub(rctx)
+	}
+	service.Mux.Handle("GET", "/sub/:left/:right", ctrl.MuxHandler("Sub", h, nil))
+	service.LogInfo("mount", "ctrl", "Operands", "action", "Sub", "route", "GET /sub/:left/:right")
 }

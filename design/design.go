@@ -23,4 +23,13 @@ var _ = Resource("operands", func() {
 		Response(OK, "text/plain")
 	})
 
+	Action("sub", func() {
+		Routing(GET("sub/:left/:right"))
+		Description("sub returns the difference between left and right parameters in the response body")
+		Params(func() {
+			Param("left", Integer, "Left operand")
+			Param("right", Integer, "Right operand")
+		})
+		Response(OK, "text/plain")
+	})
 })
